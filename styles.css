@@ -1,0 +1,37 @@
+:root{
+    /*not sure now if needed - review*/
+    --random-color__top:red;
+    --random-color__bottom:green;
+    /*not sure now if needed - review*/
+}
+
+#palette-section{
+    display:flex;
+    flex-flow:row nowrap;
+    height:100%;
+    width:100%;
+}
+
+.color-pair{
+    /*border:2px solid black;*/
+    display:flex;
+    flex-flow:column nowrap;
+    align-items:center;
+    justify-content:center;
+    height:100%;
+    width:25%;
+}
+
+.color-pair__top, .color-pair__bottom{
+    border:2px solid black; 
+    height:50%;
+    width:100%;
+}
+
+.color-pair:first-of-type .color-pair__top{
+    
+}
+
+.color-pair:first-of-type .color-pair__bottom{
+    
+}
