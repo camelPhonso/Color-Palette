@@ -23,47 +23,54 @@ function generateColor(){
 function generateAnalogous(array, div){
      //this function will generate colors that are side by side with the argument
     //this will be used to generate .color-pair__top colors following the first randomColor
-    if(div == analogousColors.length) return;
-    console.log('cycle - ' + div); //to test recursion
+    // if(div == analogousColors.length) return;
     
     let baseColor = randomColor.split('');
-    let tempColor = [];
+    let temporaryHex = [];
     
     let isHexNumber = (/[0-8]/);
     let isHexLetter = (/[A-F]/);
     
     for (let i = 0; i < baseColor.length; i++){
-        isHexNumber.test(baseColor[i]) ? tempColor.push(Number(baseColor[i]) + 1) : isHexLetter.test(baseColor[i]) ? tempColor.push(reversedHexDigits[Math.floor(Math.random() * 7)]) : tempColor.push('1');
+        isHexNumber.test(baseColor[i]) ? temporaryHex.push(Number(baseColor[i]) + 1) : isHexLetter.test(baseColor[i]) ? temporaryHex.push(reversedHexDigits[Math.floor(Math.random() * 7)]) : temporaryHex.push('1');
     };
 
-    console.log(`base color - ${baseColor}`);
-    console.log(`new color - ${tempColor}`);
-    randomColor = tempColor.join('');
+    randomColor = temporaryHex.join('');
 
     array[div].style.backgroundColor = `#${randomColor}`
     
-    generateAnalogous(array, div + 1);
+    // generateAnalogous(array, div + 1);
 
 };
 
-function generateComplementary(div){
+function generateComplementary(array, div){
     //this function will generate a complementary color to the argument
     //this will be used to generate every .color-pair__bottom based on its pairing top
+    // if(div == complementaryColors.length) return;
     
-    let temporaryArray = div.getAttribute('name').split('');
-    let temporaryHex = '';
+    let baseColor = randomColor.split('');
+    let temporaryHex = [];
     
-    for (let i = 0; i < temporaryArray.length; i++){
+    for (let i = 0; i < baseColor.length; i++){
         for(let j = 0; j < hexDigits.length; j++){
-            temporaryArray[i] == hexDigits[j] ? temporaryHex += reversedHexDigits[j] : null;
+            baseColor[i] == hexDigits[j] ? temporaryHex.push(reversedHexDigits[j]) : null;
         };
     };
-    
-    // let parentColorPair = ; --> this line has been changed and not tested **CHECK && REMOVE**
-    
+    array[div].style.backgroundColor = `#${temporaryHex.join('')}`;
+
+    // generateComplementary(array, div+1);
 };
 
+function generateScheme(array1, array2, cycle){
+    if(cycle == array1.length) return;
+    
+    generateAnalogous(array1, cycle);
+    generateComplementary(array2, cycle);
+
+    setTimeout(generateScheme(array1, array2, cycle+1), 3000);
+    
+}
 
 
 generateColor();
-generateAnalogous(analogousColors, 0);
+generateScheme(analogousColors, complementaryColors, 0);

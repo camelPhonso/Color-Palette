@@ -1,6 +1,7 @@
 #palette-section{
     display:flex;
     flex-flow:row nowrap;
+    gap:15px;
     height:750px;
     width:100%;
 }
@@ -11,6 +12,7 @@
     flex-flow:column nowrap;
     align-items:center;
     justify-content:center;
+    gap:15px;
     height:100%;
     width:25%;
 }
@@ -19,4 +21,5 @@
     border:2px solid black; 
     height:50%;
     width:100%;
+    transition: 1.2s linear ease-in
 }
