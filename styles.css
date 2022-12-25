@@ -7,7 +7,6 @@
 }
 
 .color-pair{
-    border:2px solid black;
     display:flex;
     flex-flow:column nowrap;
     align-items:center;
@@ -18,8 +17,8 @@
 }
 
 .color-pair__top, .color-pair__bottom{
-    border:2px solid black; 
     height:50%;
     width:100%;
+    border-radius:20px;
     transition: 1.2s linear ease-in
 }

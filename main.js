@@ -4,7 +4,7 @@ const reversedHexDigits = ['F','E','D','C','B','A',9,8,7,6,5,4,3,2,1,0];
 const analogousColors = document.querySelectorAll('.analogous--color');
 const complementaryColors = document.querySelectorAll('.complementary--color');
 
-//this function will generate a random color to attribute to the first .color-pair__top
+//this function will generate the first randomColor which the entire scheme will be based on
 function generateColor(){
     let temporaryHex = '';
     for (let i = 0; i < 6; i++){
@@ -13,41 +13,40 @@ function generateColor(){
     };
 
     window.randomColor = temporaryHex; //randomColor is a global variable in relation to which all other colors will be defined
-
-    // window.firstColorDisplay = document.querySelector('.color-pair__top');
-    // firstColorDisplay.setAttribute('name',temporaryHex);
-    // firstColorDisplay.style.backgroundColor = `#${randomColor}`;
-
 };
 
+//this function is recalled within generateAnalogous
+//set here as a separate method for reading ease when reviewing generateAnalogous
+function replaceLetters(example){
+    let hexLetters = ['A','B','C','D','E','F'];
+    window.letter;
+
+    for (let i = 0; i < hexLetters.length; i++){
+        example == hexLetters[i] ? letter = hexLetters[i+1] : null;
+    };
+    return letter;
+};
+
+//this function will generate a new color, analogous to the current randomColor
 function generateAnalogous(array, div){
-     //this function will generate colors that are side by side with the argument
-    //this will be used to generate .color-pair__top colors following the first randomColor
-    // if(div == analogousColors.length) return;
-    
     let baseColor = randomColor.split('');
     let temporaryHex = [];
     
     let isHexNumber = (/[0-8]/);
-    let isHexLetter = (/[A-F]/);
+    let isHexLetter = (/[A-E]/);
     
     for (let i = 0; i < baseColor.length; i++){
-        isHexNumber.test(baseColor[i]) ? temporaryHex.push(Number(baseColor[i]) + 1) : isHexLetter.test(baseColor[i]) ? temporaryHex.push(reversedHexDigits[Math.floor(Math.random() * 7)]) : temporaryHex.push('1');
+        isHexNumber.test(baseColor[i]) ? temporaryHex.push(Number(baseColor[i]) + 1) : isHexLetter.test(baseColor[i]) ? replaceLetters(baseColor[i]) && temporaryHex.push(letter) : baseColor[i] == '9' ? temporaryHex.push('1') : temporaryHex.push('A');
     };
 
     randomColor = temporaryHex.join('');
 
     array[div].style.backgroundColor = `#${randomColor}`
-    
-    // generateAnalogous(array, div + 1);
-
 };
 
+
+//this function will generate a new color, complementary to the current randomColor
 function generateComplementary(array, div){
-    //this function will generate a complementary color to the argument
-    //this will be used to generate every .color-pair__bottom based on its pairing top
-    // if(div == complementaryColors.length) return;
-    
     let baseColor = randomColor.split('');
     let temporaryHex = [];
     
@@ -57,20 +56,20 @@ function generateComplementary(array, div){
         };
     };
     array[div].style.backgroundColor = `#${temporaryHex.join('')}`;
-
-    // generateComplementary(array, div+1);
 };
 
+//this function uses recursion to initiate generateAnalogous() and generateComplementary() for each div on the page
 function generateScheme(array1, array2, cycle){
     if(cycle == array1.length) return;
     
     generateAnalogous(array1, cycle);
     generateComplementary(array2, cycle);
 
-    setTimeout(generateScheme(array1, array2, cycle+1), 3000);
-    
+    console.log(randomColor);
+
+    generateScheme(array1, array2, cycle+1);  
 }
 
-
+//initiate page
 generateColor();
 generateScheme(analogousColors, complementaryColors, 0);
