@@ -1,4 +1,4 @@
-# Color Pallete
+# Color Palette
 This project asks us to create a color palette that the user can interact by editing any of the colors displayed. The page should randomly generate different palettes and each pallete 
 should be pleasing..
 
@@ -61,3 +61,10 @@ The base case for generateScheme() checks whether the arugment provided for 'cyc
 does,the function will stop, otherwise, the function will call generateAnalogous() and generateComplementary() for the current cycle and then call itself again with an incremental argument 
 for 'cycle'. The first array passed to generateScheme() is fed down to generateAnalogous() and the second is fed down to generateComplementary(), the number value of the argument 
 'cycle' is also fed down to the other two functions as the argument for their 'cycle' parameter.
+
+## Usability
+With the color palette being generated on the page, we can focus on the user interface and usability of the page. I added an eventListne and a prompt on the page to let the user know 
+they can generate a new color palette by pressing the key 'Enter'. This keeps the page with a minimal look, since it will be populated at each use with an assortment of colors, I prefer 
+to keep its look clean and avoid having to combine too many elements (like buttons, for example) with all possible color combinations that will be displayed.
+
+I also added a <p> element that is only displayed when hovering over a color. This element gets edited at each cycle so that it shows the HEX code for the color being displayed.
