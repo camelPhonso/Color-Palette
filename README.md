@@ -42,3 +42,22 @@ separate array, reversedHexDigits. As the name indicates, this is an array that 
 characters as hexDigits, but in the reversed order.
 The end result is a new HEX code, called temporaryHEX, that gets assigned to the div with the class of 
 .color-pair__bottom, with the same parent element as the div we originally called the function on.
+
+### generateAnalogous()
+Analogous colors sit side-by-side on the color wheel. The simplest ways to create this effect is to identify each digit of the current hex and replace it with an incremental value. To 
+that effect, generateAnalogous() adds '1' to each number and replaces every letter with the following letter from an array of all letters available to a HEX code. To avoid invalid 
+characters, any digit that returns the values '9' or 'F' is replaced with 'A' or '1' instead. This also avoids any one digit repeatedly circling through the same 10 numbers or 6 letters 
+throughout the color palette.
+
+### generateScheme()
+Once each of the previous functions was working I needed to figure out the best way to iterate through them so that each new color got assigned to a display, before the next could be 
+generated. The function generateScheme() uses recursion to achieve this. The function iterates through two provided arrays, one lists all the displays on HTML reserved for analogous 
+colors, and the other lists all displays in HTML reserved for complementary colors.
+
+Before this new function could be created, the original generateAnalogous() and generateComplementary() had to be adjusted to consider two arguments, an array and a number, in this case 
+called 'div'. These two arguments will be fed to both functions when generateScheme() is called.
+
+The base case for generateScheme() checks whether the arugment provided for 'cycle' equals the length of one fo the arrays provided (they will always both have the same length). If it 
+does,the function will stop, otherwise, the function will call generateAnalogous() and generateComplementary() for the current cycle and then call itself again with an incremental argument 
+for 'cycle'. The first array passed to generateScheme() is fed down to generateAnalogous() and the second is fed down to generateComplementary(), the number value of the argument 
+'cycle' is also fed down to the other two functions as the argument for their 'cycle' parameter.

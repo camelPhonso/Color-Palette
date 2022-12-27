@@ -1,8 +1,12 @@
+*{
+    font-family:monospace, sans-serif;
+}
+
 #palette-section{
     display:flex;
     flex-flow:row nowrap;
     gap:15px;
-    height:750px;
+    height:700px;
     width:100%;
 }
 
@@ -21,4 +25,29 @@
     width:100%;
     border-radius:20px;
     transition: 1.2s linear ease-in
+}
+
+.color{
+    transition: 1s linear;
+}
+
+.filled{
+    display:none;
+    margin:40% 32%;
+    text-align:center;
+    width:90px;
+    font-size:1.5rem;
+    background-color:gray;
+    color:whitesmoke;
+    padding:5px 15px 5px 5px;
+    cursor:pointer;
+}
+
+.color:hover .hex--display{
+    display:block;
+}
+
+h1{
+    margin:15px auto;
+    text-align:center;
 }
