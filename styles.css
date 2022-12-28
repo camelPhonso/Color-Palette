@@ -61,3 +61,24 @@ textarea{
     border:none;
     display:none;
 }
+
+@media screen and (max-width: 900px){
+    #palette-section{
+        display:flex;
+        flex-flow:column nowrap;
+        gap:5px;
+    }
+
+    .color-pair{
+        display:flex;
+        flex-flow:row-reverse nowrap;
+        width:100%;
+        height:25%;
+        gap:5px;
+    }
+
+    .color--pair__top .color--pair__bottom{
+        height:100%;
+        width:50%;
+    }
+}
