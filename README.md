@@ -68,3 +68,22 @@ they can generate a new color palette by pressing the key 'Enter'. This keeps th
 to keep its look clean and avoid having to combine too many elements (like buttons, for example) with all possible color combinations that will be displayed.
 
 I also added a <p> element that is only displayed when hovering over a color. This element gets edited at each cycle so that it shows the HEX code for the color being displayed.
+
+### Allowing the user to edit each generated color
+All <p> elements were changed to <textarea> elements in order to allow the 
+text to be highlighted and edited by the user. Once a user hovers over any 
+color they can see the current hex code on the page and the cursor shows 
+then that it can be selected.
+
+There is an event listener attached to each of the .hex--display elements 
+that will check every key input. Every time the HEX code on display is 
+edited it will be checked against a regExp and, if it follows the 
+parameters for a valid HEX code, it will be applied to the color display 
+in focus immediately.
+
+While testing this feature I found that I preferred to use the Spacebar 
+to trigger a new color palette, rather than the 'Enter' key.
+The event listeners ignore any press of the 'Enter' key and will .blur() 
+the element currently in focus if the Spacebar is pressed, so that 
+generateScheme() can perform normally (without this, the current HEX code 
+would not update).
