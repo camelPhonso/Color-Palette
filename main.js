@@ -1,8 +1,8 @@
 const hexDigits = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'];
 const reversedHexDigits = ['F','E','D','C','B','A',9,8,7,6,5,4,3,2,1,0];
+
 const analogousColors = document.querySelectorAll('.analogous--color');
 const complementaryColors = document.querySelectorAll('.complementary--color');
-
 //this function will generate the first randomColor which the entire scheme will be based on
 function generateColor(){
     let temporaryHex = '';
@@ -10,9 +10,8 @@ function generateColor(){
         let digit = Math.floor((Math.random() * 16));
         temporaryHex += (hexDigits[digit]);
     };
-
-     //randomColor is a global variable in relation to which all other colors will be defined
-     window.randomColor = temporaryHex;
+    
+    window.randomColor = temporaryHex;
 };
 
 //this function is recalled within generateAnalogous
@@ -20,7 +19,7 @@ function generateColor(){
 function replaceLetters(example){
     let hexLetters = ['A','B','C','D','E','F'];
     window.letter;
-
+    
     for (let i = 0; i < hexLetters.length; i++){
         example == hexLetters[i] ? letter = hexLetters[i+1] : null;
     };
@@ -36,7 +35,10 @@ function generateAnalogous(array, div){
     let isHexLetter = (/[A-E]/);
     
     for (let i = 0; i < baseColor.length; i++){
-        isHexNumber.test(baseColor[i]) ? temporaryHex.push(Number(baseColor[i]) + 1) : isHexLetter.test(baseColor[i]) ? replaceLetters(baseColor[i]) && temporaryHex.push(letter) : baseColor[i] == '9' ? temporaryHex.push('1') : temporaryHex.push('A');
+        isHexNumber.test(baseColor[i]) ? 
+        temporaryHex.unshift(Number(baseColor[i]) + 1) : isHexLetter.test(baseColor[i]) ? 
+        replaceLetters(baseColor[i]) && temporaryHex.push(letter) : baseColor[i] == '9' ? 
+        temporaryHex.unshift('A') : temporaryHex.push('1');
     };
     
     randomColor = temporaryHex.join('');
@@ -44,8 +46,8 @@ function generateAnalogous(array, div){
     array[div].style.backgroundColor = `#${randomColor}`
     let currentDisplay = array[div].querySelector('.hex--display');
     currentDisplay.classList.add('filled');
-    currentDisplay.innerText = `#${randomColor}`;
-
+    currentDisplay.value = `#${randomColor}`;
+    
 };
 
 
@@ -53,17 +55,18 @@ function generateAnalogous(array, div){
 function generateComplementary(array, div){
     let baseColor = randomColor.split('');
     let temporaryHex = [];
+
     
     for (let i = 0; i < baseColor.length; i++){
         for(let j = 0; j < hexDigits.length; j++){
             baseColor[i] == hexDigits[j] ? temporaryHex.push(reversedHexDigits[j]) : null;
         };
     };
-   
+    
     array[div].style.backgroundColor = `#${temporaryHex.join('')}`;
     let currentDisplay = array[div].querySelector('.hex--display');
     currentDisplay.classList.add('filled');
-    currentDisplay.innerText = `#${randomColor}`;
+    currentDisplay.value = `#${randomColor}`;
 };
 
 //this function uses recursion to initiate generateAnalogous() and generateComplementary() for each div on the page
@@ -72,14 +75,32 @@ function generateScheme(array1, array2, cycle){
     
     generateAnalogous(array1, cycle);
     generateComplementary(array2, cycle);
-
+    
     generateScheme(array1, array2, cycle+1);  
-}
+};
+
+//this event listener will allow users to see the effect of edits made to any color on display
+let hexEditors = document.querySelectorAll('.hex--display');
+hexEditors.forEach((hex) => {
+    hex.addEventListener('keydown', (e) => e.key == 'Enter' ? e.preventDefault() : e.key === ' ' ? hex.blur() : null);
+    hex.addEventListener('keyup', (e) => {
+        if(new RegExp(/([A-F]|[0-9]){6}/gi).test(hex.value)){
+            hex.style.color = 'white';
+            hex.parentElement.style.backgroundColor = `${hex.value}`;
+            console.log(hex.value);
+        }else{
+            hex.style.color = 'red';
+        };
+    });
+});
+
+
 
 //initiate page
 document.addEventListener('keydown', e =>{
-    if(e.key === 'Enter'){
+    if(e.key === ' '){
         generateColor();
         generateScheme(analogousColors, complementaryColors, 0);
+        console.log(hexEditors[0].innerText);
     };
 });

@@ -1,5 +1,6 @@
 *{
     font-family:monospace, sans-serif;
+    box-sizing: border-box;
 }
 
 #palette-section{
@@ -24,22 +25,26 @@
     height:50%;
     width:100%;
     border-radius:20px;
-    transition: 1.2s linear ease-in
+    transition: 1.2s linear ease-in;
 }
 
 .color{
     transition: 1s linear;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .filled{
     display:none;
-    margin:40% 32%;
     text-align:center;
-    width:90px;
-    font-size:1.5rem;
+    text-justify: center;
+    height:5vh;
+    width:10vw;
+    font-size:1.8vw;
     background-color:gray;
     color:whitesmoke;
-    padding:5px 15px 5px 5px;
+    padding:5px;
     cursor:pointer;
 }
 
@@ -50,4 +55,9 @@
 h1{
     margin:15px auto;
     text-align:center;
+}
+
+textarea{
+    border:none;
+    display:none;
 }
