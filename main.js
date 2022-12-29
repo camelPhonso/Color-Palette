@@ -47,7 +47,9 @@ function generateAnalogous(array, div){
     let currentDisplay = array[div].querySelector('.hex--display');
     currentDisplay.classList.add('filled');
     currentDisplay.value = `#${randomColor}`;
-    
+
+    let copyButton = currentDisplay.parentNode.querySelector('.fa-copy');
+    copyButton.classList.add('filled');
 };
 
 
@@ -67,6 +69,9 @@ function generateComplementary(array, div){
     let currentDisplay = array[div].querySelector('.hex--display');
     currentDisplay.classList.add('filled');
     currentDisplay.value = `#${randomColor}`;
+
+    let copyButton = currentDisplay.parentNode.querySelector('.fa-copy');
+    copyButton.classList.add('filled');    
 };
 
 //this function uses recursion to initiate generateAnalogous() and generateComplementary() for each div on the page
@@ -94,7 +99,13 @@ hexEditors.forEach((hex) => {
     });
 });
 
-
+//copy HEX to clipboard
+function copyToClipboard(btn){
+    let editedHex = btn.parentNode.querySelector('.hex--display')
+    editedHex.select();
+    document.execCommand('copy');
+    window.alert('Copied to clipboard');
+};
 
 //initiate page
 document.addEventListener('keydown', e =>{

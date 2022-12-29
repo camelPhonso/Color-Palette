@@ -35,31 +35,38 @@
     align-items: center;
 }
 
+.color *{
+    display:none;
+}
+
+textarea{
+    height:5vh;
+    width:10vw;
+    font-size:1.8vw;
+    padding:5px;
+}
+
+.fa-copy{
+    height:5vh;
+    padding:12px;
+
+}
 .filled{
     display:none;
     text-align:center;
     text-justify: center;
-    height:5vh;
-    width:10vw;
-    font-size:1.8vw;
     background-color:gray;
     color:whitesmoke;
-    padding:5px;
     cursor:pointer;
 }
 
-.color:hover .hex--display{
+.color:hover .filled{
     display:block;
 }
 
 h1{
     margin:15px auto;
     text-align:center;
-}
-
-textarea{
-    border:none;
-    display:none;
 }
 
 @media screen and (max-width: 900px){
