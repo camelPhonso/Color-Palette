@@ -14,40 +14,31 @@ function generateColor(){
     window.randomColor = temporaryHex;
 };
 
-//this function is recalled within generateAnalogous
-//set here as a separate method for reading ease when reviewing generateAnalogous
-function replaceLetters(example){
-    let hexLetters = ['A','B','C','D','E','F'];
-    window.letter;
-    
-    for (let i = 0; i < hexLetters.length; i++){
-        example == hexLetters[i] ? letter = hexLetters[i+1] : null;
-    };
-    return letter;
-};
-
 //this function will generate a new color, analogous to the current randomColor
 function generateAnalogous(array, div){
     let baseColor = randomColor.split('');
     let temporaryHex = [];
-    
-    let isHexNumber = (/[0-8]/);
-    let isHexLetter = (/[A-E]/);
-    
+
     for (let i = 0; i < baseColor.length; i++){
-        isHexNumber.test(baseColor[i]) ? 
-        temporaryHex.unshift(Number(baseColor[i]) + 1) : isHexLetter.test(baseColor[i]) ? 
-        replaceLetters(baseColor[i]) && temporaryHex.push(letter) : baseColor[i] == '9' ? 
-        temporaryHex.unshift('A') : temporaryHex.push('1');
+            if(baseColor[i] === 'F'){
+                temporaryHex.push(0);
+        }else{
+            for (let j = 0; j < hexDigits.length; j++){
+                baseColor[i] == hexDigits[j] ?
+                    temporaryHex.push(hexDigits[j+1]) : null;
+            };
+        };
     };
-    
+                            
     randomColor = temporaryHex.join('');
-    
+    console.log(randomColor);
+
     array[div].style.backgroundColor = `#${randomColor}`
+
     let currentDisplay = array[div].querySelector('.hex--display');
     currentDisplay.classList.add('filled');
     currentDisplay.value = `#${randomColor}`;
-
+    
     let copyButton = currentDisplay.parentNode.querySelector('.fa-copy');
     copyButton.classList.add('filled');
 };
@@ -57,7 +48,7 @@ function generateAnalogous(array, div){
 function generateComplementary(array, div){
     let baseColor = randomColor.split('');
     let temporaryHex = [];
-
+    
     
     for (let i = 0; i < baseColor.length; i++){
         for(let j = 0; j < hexDigits.length; j++){
@@ -69,7 +60,7 @@ function generateComplementary(array, div){
     let currentDisplay = array[div].querySelector('.hex--display');
     currentDisplay.classList.add('filled');
     currentDisplay.value = `#${randomColor}`;
-
+    
     let copyButton = currentDisplay.parentNode.querySelector('.fa-copy');
     copyButton.classList.add('filled');    
 };
@@ -112,6 +103,5 @@ document.addEventListener('keydown', e =>{
     if(e.key === ' '){
         generateColor();
         generateScheme(analogousColors, complementaryColors, 0);
-        console.log(hexEditors[0].innerText);
     };
 });
