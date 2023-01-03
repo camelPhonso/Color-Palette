@@ -3,6 +3,7 @@ const reversedHexDigits = ['F','E','D','C','B','A',9,8,7,6,5,4,3,2,1,0];
 
 const analogousColors = document.querySelectorAll('.analogous--color');
 const complementaryColors = document.querySelectorAll('.complementary--color');
+
 //this function will generate the first randomColor which the entire scheme will be based on
 function generateColor(){
     let temporaryHex = '';
@@ -24,14 +25,14 @@ function generateAnalogous(array, div){
                 temporaryHex.push(0);
         }else{
             for (let j = 0; j < hexDigits.length; j++){
-                baseColor[i] == hexDigits[j] ?
-                    temporaryHex.push(hexDigits[j+1]) : null;
+                if(baseColor[i] == hexDigits[j]){
+                    temporaryHex.push(hexDigits[j+1]);
+                };
             };
         };
     };
                             
     randomColor = temporaryHex.join('');
-    console.log(randomColor);
 
     array[div].style.backgroundColor = `#${randomColor}`
 
@@ -59,7 +60,7 @@ function generateComplementary(array, div){
     array[div].style.backgroundColor = `#${temporaryHex.join('')}`;
     let currentDisplay = array[div].querySelector('.hex--display');
     currentDisplay.classList.add('filled');
-    currentDisplay.value = `#${randomColor}`;
+    currentDisplay.value = `#${temporaryHex.join('')}`;
     
     let copyButton = currentDisplay.parentNode.querySelector('.fa-copy');
     copyButton.classList.add('filled');    
@@ -67,7 +68,7 @@ function generateComplementary(array, div){
 
 //this function uses recursion to initiate generateAnalogous() and generateComplementary() for each div on the page
 function generateScheme(array1, array2, cycle){
-    if(cycle == array1.length) return;
+    if(cycle === array1.length) return;
     
     generateAnalogous(array1, cycle);
     generateComplementary(array2, cycle);
@@ -83,7 +84,6 @@ hexEditors.forEach((hex) => {
         if(new RegExp(/([A-F]|[0-9]){6}/gi).test(hex.value)){
             hex.style.color = 'white';
             hex.parentElement.style.backgroundColor = `${hex.value}`;
-            console.log(hex.value);
         }else{
             hex.style.color = 'red';
         };

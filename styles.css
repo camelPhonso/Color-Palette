@@ -41,13 +41,14 @@ textarea{
     width:10vw;
     font-size:1.8vw;
     padding:5px;
+    cursor:text;
 }
 
 .fa-copy{
     display:none;
     height:5vh;
     padding:12px;
-
+    cursor:pointer;
 }
 .filled{
     display:none;
@@ -55,7 +56,6 @@ textarea{
     text-justify: center;
     background-color:gray;
     color:whitesmoke;
-    cursor:pointer;
 }
 
 .color:hover .filled{
